@@ -1,5 +1,5 @@
 # ds000171
-Openfmri Dataset ds000171: Scripts for preprocessing and modelling
+Openfmri Dataset ds000171: Scripts for preprocessing and modelling. These Matlab scripts require SPM 12 software to be installed. Each script created batch files and runs them using SPM's inbuilt batch file execution. 
 
 AutomateRename.m - Rename files to a standard format
 
