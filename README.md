@@ -1,8 +1,10 @@
 # ds000171
 Openfmri Dataset ds000171: Scripts for preprocessing and modelling
 
-AutomateRename.m - Rename files to a standard format. 
+AutomateRename.m - Rename files to a standard format
+
 AutomateRealign.m - Realign functional images
+
 AutomateCoregistration.m - Register functional with T1
 AutomateSegment.m - Segment images
 AutomateNormalize.m - Normalization of all functional images
