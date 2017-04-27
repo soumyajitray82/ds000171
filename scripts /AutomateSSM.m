@@ -1,11 +1,8 @@
-clear; close all;
+function AutomateSSM(controlPath,MDDPath,MDDSub,ControlSub)
 
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
 
-% SSM for MDD subjects
-for subIndex=1:19
+%% SSM for MDD subjects
+for subIndex=MDDSub
 
     % Set the subject number format - 01 etc
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -74,8 +71,8 @@ for subIndex=1:19
 end
 
 
-% SSM for control subjects
-for subIndex=1:20
+%% SSM for control subjects
+for subIndex=ControlSub
 
     % Set the subject number format - 01 etc
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -143,3 +140,4 @@ for subIndex=1:20
     
 end
 
+end

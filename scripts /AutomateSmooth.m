@@ -1,10 +1,7 @@
-clear; close all;
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
+function AutomateSmooth(controlPath,MDDPath,MDDSub,ControlSub)
 
-% Smooth for MDD subjects
-for subIndex=1:19
+%% Smooth for MDD subjects
+for subIndex=MDDSub
     % Set the subject number format - 01 etc
     if subIndex<10, subNum=['0' num2str(subIndex)];
     else, subNum=['' num2str(subIndex)];
@@ -36,8 +33,8 @@ for subIndex=1:19
     spm_jobman('run', jobfile, inputs{:});
 end
 
-% Smooth for control subjects
-for subIndex=1:20
+%% Smooth for control subjects
+for subIndex=ControlSub
     % Set the subject number format - 01 etc
     if subIndex<10, subNum=['0' num2str(subIndex)];
     else, subNum=['' num2str(subIndex)];

@@ -1,9 +1,7 @@
-clear; close all;
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
-% Normalization for MDD subjects
-for subIndex=6:19
+function AutomateNormalize(controlPath,MDDPath,MDDSub,ControlSub)
+
+%% Normalization for MDD subjects
+for subIndex=MDDSub
 
     % Set the subject number format - 01 etc
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -49,7 +47,7 @@ end
 %}
 
 %% Normalize for control subjects
-for subIndex=9:20
+for subIndex=ControlSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -91,5 +89,7 @@ for subIndex=9:20
     inputs = cell(0, 1);
     spm('defaults', 'FMRI');
     spm_jobman('run', jobfile, inputs{:});
+
+end
 
 end

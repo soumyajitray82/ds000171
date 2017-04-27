@@ -1,10 +1,7 @@
-clear; close all;
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
+function AutomateRealign(controlPath,MDDPath,MDDSub,ControlSub)
 
-% Realignment for MDD subjects
-for subIndex=1:19
+%% Realignment for MDD subjects
+for subIndex=MDDSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -13,6 +10,7 @@ for subIndex=1:19
 
     %% Create the job file for realign
     fid=fopen(['MDD' subNum 'realign.m'],'w');
+    fprintf(fid,'spm_figure(''GetWin'',''Graphics'');');
     fprintf(fid,'matlabbatch{1}.spm.spatial.realign.estwrite.data = {\n');
 
     for runInd=1:5
@@ -51,8 +49,8 @@ for subIndex=1:19
 
 end
 
-% Realignment for control subjects
-for subIndex=11:20
+%% Realignment for control subjects
+for subIndex=ControlSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -61,6 +59,7 @@ for subIndex=11:20
 
     %% Create the job file for realign
     fid=fopen(['control' subNum 'realign.m'],'w');
+    fprintf(fid,'spm_figure(''GetWin'',''Graphics'');');
     fprintf(fid,'matlabbatch{1}.spm.spatial.realign.estwrite.data = {\n');
 
     for runInd=1:5

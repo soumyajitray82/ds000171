@@ -1,11 +1,7 @@
-clear; close all;
-
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
+function AutomateConditions(controlPath,MDDPath,MDDSub,ControlSub)
 
 %% Create conditions for MDD subjects
-for subInd=1:19
+for subInd=MDDSub
     
     if subInd<10, subNum=['0' num2str(subInd)];
     else, subNum=['' num2str(subInd)];
@@ -70,7 +66,7 @@ for subInd=1:19
 end
 
 %% Create conditions for Control subjects
-for subInd=1:20
+for subInd=ControlSub
     
     if subInd<10, subNum=['0' num2str(subInd)];
     else, subNum=['' num2str(subInd)];
@@ -132,4 +128,6 @@ for subInd=1:20
         save(oFilePath,'names','onsets','durations');
         
     end
+end
+
 end

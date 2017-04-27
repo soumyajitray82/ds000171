@@ -1,10 +1,7 @@
-clear; close all;
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
+function AutomateCoregistration(controlPath,MDDPath,MDDSub,ControlSub)
 
-% Coregistration for MDD subjects
-for subIndex=1:19
+%% Coregistration for MDD subjects
+for subIndex=MDDSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -13,6 +10,7 @@ for subIndex=1:19
 
     %% Create the job file for coregister
     fid=fopen(['MDD' subNum 'coregister.m'],'w');
+    fprintf(fid,'spm_figure(''GetWin'',''Graphics'');');
     fprintf(fid,['matlabbatch{1}.spm.spatial.coreg.estimate.ref = {''' MDDPath 'sub-mdd' subNum '/func/meansub-mdd' subNum '_task-music_run-1_bold.nii,1''};\n']);
     fprintf(fid,['matlabbatch{1}.spm.spatial.coreg.estimate.source = {''' MDDPath 'sub-mdd' subNum '/anat/sub-mdd' subNum '_T1w.nii,1''};\n']);
     fprintf(fid,'matlabbatch{1}.spm.spatial.coreg.estimate.other = {''''};\n');
@@ -30,8 +28,8 @@ for subIndex=1:19
     
 end
 
-% Coregistration for control subjects
-for subIndex=1:20
+%% Coregistration for control subjects
+for subIndex=ControlSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
@@ -40,6 +38,7 @@ for subIndex=1:20
 
     %% Create the job file for coregister
     fid=fopen(['control' subNum 'coregister.m'],'w');
+    fprintf(fid,'spm_figure(''GetWin'',''Graphics'');');
     fprintf(fid,['matlabbatch{1}.spm.spatial.coreg.estimate.ref = {''' controlPath 'sub-control' subNum '/func/meansub-control' subNum '_task-music_run-1_bold.nii,1''};\n']);
     fprintf(fid,['matlabbatch{1}.spm.spatial.coreg.estimate.source = {''' controlPath 'sub-control' subNum '/anat/sub-control' subNum '_T1w.nii,1''};\n']);
     fprintf(fid,'matlabbatch{1}.spm.spatial.coreg.estimate.other = {''''};\n');
@@ -55,4 +54,6 @@ for subIndex=1:20
     spm('defaults', 'FMRI');
     spm_jobman('run', jobfile, inputs{:});
     
+end
+
 end

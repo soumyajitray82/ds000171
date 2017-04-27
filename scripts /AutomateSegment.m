@@ -1,17 +1,14 @@
-clear; close all;
-dataPath='/Volumes/Project/fMRI/Dataset/';       % Path for the dataset
-controlPath=[dataPath 'ds171_R1.0.0_control/'];  % Path for the Control group
-MDDPath=[dataPath 'ds171_R1.0.0_MDD/'];          % Path for the MDD group
-SPMPath='/Users/soumyajitray/Documents/Spring2017/FunctionalNeuroimaging/spm12/';
+function AutomateSegment(controlPath,MDDPath,SPMPath,MDDSub,ControlSub)
 
-for subIndex=1:19
+%% Automate segment for MDD subjects
+for subIndex=MDDSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
     else, subNum=['' num2str(subIndex)];
     end
 
-    %% Create the job file for coregister
+    %% Create the job file for segment
     fid=fopen(['MDD' subNum 'segment.m'],'w');
     
     fprintf(fid,['matlabbatch{1}.spm.spatial.preproc.channel.vols = {''' MDDPath 'sub-mdd' subNum '/anat/sub-mdd' subNum '_T1w.nii,1''};\n']);
@@ -51,7 +48,7 @@ for subIndex=1:19
     fprintf(fid,'matlabbatch{1}.spm.spatial.preproc.warp.write = [0 1];\n');
     fclose(fid);
     
-     %% Run the job file for coregister
+     %% Run the job file for segment
     jobfile = {['MDD' subNum 'segment.m']};
     inputs = cell(0, 1);
     spm('defaults', 'FMRI');
@@ -59,14 +56,15 @@ for subIndex=1:19
     
 end
 
-for subIndex=1:20
+%% Automate segment for Control subjects
+for subIndex=ControlSub
 
     % Set the subject number format
     if subIndex<10, subNum=['0' num2str(subIndex)];
     else, subNum=['' num2str(subIndex)];
     end
 
-    %% Create the job file for coregister
+    %% Create the job file for segment
     fid=fopen(['control' subNum 'segment.m'],'w');
     
     fprintf(fid,['matlabbatch{1}.spm.spatial.preproc.channel.vols = {''' controlPath 'sub-control' subNum '/anat/sub-control' subNum '_T1w.nii,1''};\n']);
@@ -106,10 +104,12 @@ for subIndex=1:20
     fprintf(fid,'matlabbatch{1}.spm.spatial.preproc.warp.write = [0 1];\n');
     fclose(fid);
     
-     %% Run the job file for coregister
+     %% Run the job file for segment
     jobfile = {['control' subNum 'segment.m']};
     inputs = cell(0, 1);
     spm('defaults', 'FMRI');
     spm_jobman('run', jobfile, inputs{:});
     
+end
+
 end
