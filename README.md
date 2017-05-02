@@ -3,7 +3,7 @@ https://openfmri.org/dataset/ds000171/
 
 Neural Processing of Emotional Musical and Nonmusical Stimuli in Depression
 
-Openfmri Dataset ds000171: Scripts for preprocessing and modelling. These Matlab scripts require SPM 12 software to be installed. Each script created batch files and runs them using SPM's inbuilt batch file execution. 
+Openfmri Dataset ds000171: Scripts for preprocessing and modelling. These Matlab scripts require SPM 12 software to be installed. Each script creates batch files and runs them using SPM's inbuilt batch file execution. 
 
 AutomateDS171.m - Main script to access all other functions below. Except group modeling scripts. 
 
